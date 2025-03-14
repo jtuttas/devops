@@ -1,0 +1,58 @@
+name: CloudStack Deployment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "index.html"  # Nur auslösen, wenn die index.html geändert wurde
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.5
+
+      - name: Terraform Initialisieren
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
+        env:
+          TF_VAR_cloudstack_api_url: ${{ secrets.CLOUDSTACK_API_URL }}
+          TF_VAR_cloudstack_api_key: ${{ secrets.CLOUDSTACK_API_KEY }}
+          TF_VAR_cloudstack_secret_key: ${{ secrets.CLOUDSTACK_SECRET_KEY }}
+
+      - name: Terraform Apply (Deployment)
+        run: terraform apply -auto-approve
+        env:
+          TF_VAR_cloudstack_api_url: ${{ secrets.CLOUDSTACK_API_URL }}
+          TF_VAR_cloudstack_api_key: ${{ secrets.CLOUDSTACK_API_KEY }}
+          TF_VAR_cloudstack_secret_key: ${{ secrets.CLOUDSTACK_SECRET_KEY }}
+
+      - name: Warte auf Webserver (30 Sekunden)
+        run: sleep 30  # Optional, falls der Server erst hochfährt
+
+      - name: Lade neue index.html hoch
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.CLOUDSTACK_SERVER_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "index.html"
+          target: "/var/www/html/index.html"
+
+      - name: NGINX neu starten
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.CLOUDSTACK_SERVER_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: sudo systemctl restart nginx
