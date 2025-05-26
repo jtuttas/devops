@@ -6,6 +6,8 @@ variables:
   DOCKER_DRIVER: overlay2
   DOCKER_HOST: tcp://docker:2375/
   DOCKER_TLS_CERTDIR: ""
+  TF_INPUT: "false"
+  TF_IN_AUTOMATION: "true"
 
 before_script:
   - echo "Starte Pipeline..."
@@ -19,7 +21,6 @@ build:
     - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" $DOCKER_REGISTRY
     - docker build -t $DOCKER_REGISTRY/$TF_VAR_docker_image_name .
     - docker push $DOCKER_REGISTRY/$TF_VAR_docker_image_name
-  
   only:
     - main
   tags:
@@ -30,11 +31,12 @@ deploy:
   stage: deploy
   image:
     name: hashicorp/terraform:latest
-    entrypoint: ['']
+    entrypoint: [""]
   script:
-    - terraform init
-    #- terraform taint cloudstack_instance.vm2
-    - terraform apply -auto-approve
+    - terraform init -reconfigure
+    - terraform validate
+    - terraform plan -out=tfplan
+    - terraform apply -auto-approve tfplan
   only:
     - main
   environment:

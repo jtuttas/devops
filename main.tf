@@ -5,6 +5,14 @@ variable "docker_image_name" {
   description = "Name des Docker-Containers, der gestartet werden soll"
 }
 
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "rg-terraform"
+    storage_account_name = "tfstate28675" # Dein tatsächlicher Name
+    container_name       = "tfstate"
+    key                  = "terraform/dev.tfstate"
+  }
+}
 
 terraform {
   required_providers {
