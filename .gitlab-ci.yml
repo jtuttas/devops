@@ -19,6 +19,8 @@ build:
     - docker build -t $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$CI_COMMIT_SHORT_SHA .
   only:
     - main
+  tags:
+    - mmbbs3
 
 push:
   stage: push
@@ -32,6 +34,8 @@ push:
     - main
   dependencies:
     - build
+  tags:
+    - mmbbs3
 
 deploy:
   stage: deploy
@@ -47,3 +51,5 @@ deploy:
     - push
   environment:
     name: production
+  tags:
+    - mmbbs3
