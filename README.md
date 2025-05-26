@@ -9,6 +9,6 @@
 
 ---
 
-- `CLOUDSTACK_API_URL`: Die URL der CloudStack-API.
-- `CLOUDSTACK_API_KEY`: Der API-Schlüssel für die CloudStack-API.
-- `CLOUDSTACK_SECRET_KEY`: Der geheime Schlüssel für die CloudStack-API.    
+- `TF_VAR_api_url`: Die URL der CloudStack-API, e.g. https://cloudstack.mm-bbs.de/client/api
+- `TF_VAR_api_key`: Der API-Schlüssel für die CloudStack-API.
+- `TF_VAR_secret_key`: Der geheime Schlüssel für die CloudStack-API.
