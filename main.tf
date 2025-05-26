@@ -1,6 +1,10 @@
 variable "api_url" {}
 variable "api_key" {}
 variable "secret_key" {}
+variable "docker_image_name" {
+  description = "Name des Docker-Containers, der gestartet werden soll"
+}
+
 
 terraform {
   required_providers {
@@ -136,6 +140,7 @@ runcmd:
   - netplan apply
   - apt-get update -y
   - curl -fsSL https://get.docker.com | sudo bash
+  - docker run -d -p 80:80 ${var.docker_image_name}
 EOT
 }
 
