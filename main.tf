@@ -77,9 +77,9 @@ resource "cloudstack_firewall" "allow_http" {
 
 
 # Virtuelle Maschine 1 erstellen
-resource "cloudstack_instance" "vm1" {
-  name              = "linux-vm1"
-  display_name      = "Linux VM 1"
+resource "cloudstack_instance" "vm2" {
+  name              = "linux-vm2"
+  display_name      = "Linux VM 2"
   service_offering  = "Big Instance"
   template          = "f5295a59-8eb5-4c73-9768-cf67dcf3656b"
   zone              = "a4848bf1-b2d1-4b39-97e3-72106df81f09"
@@ -143,7 +143,7 @@ EOT
 
 # Ausgaben definieren
 output "vm1_id" {
-  value = cloudstack_instance.vm1.id
+  value = cloudstack_instance.vm2.id
 }
 
 output "network_id" {
