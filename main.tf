@@ -135,9 +135,7 @@ runcmd:
   - netplan generate
   - netplan apply
   - apt-get update -y
-  - apt-get install -y nginx
-  - systemctl enable nginx
-  - systemctl start nginx
+  - curl -fsSL https://get.docker.com | sudo bash
 EOT
 }
 
