@@ -140,6 +140,7 @@ runcmd:
   - netplan apply
   - apt-get update -y
   - curl -fsSL https://get.docker.com | sudo bash
+  - docker pull ${var.docker_image_name}
   - docker run -d -p 80:80 ${var.docker_image_name}
 EOT
 }
