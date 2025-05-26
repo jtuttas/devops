@@ -5,7 +5,7 @@
 - `DOCKER_REGISTRY`: Die URL des Docker-Registrys, in das das Image gepusht werden soll. *docker.io* für den Docker Hub.
 - `DOCKER_USERNAME`: Der Benutzername für das Docker-Registry.
 - `DOCKER_PASSWORD`: Das Passwort für das Docker-Registry.
-- `DOCKER_IMAGE_NAME`: Der Name des Docker-Images, das erstellt werden soll.
+- `DOCKER_IMAGE_NAME`: Der Name des Docker-Images, das erstellt werden soll. E.g. `tuttas/myapp`.
 
 ---
 
