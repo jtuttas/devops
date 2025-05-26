@@ -33,7 +33,7 @@ deploy:
     entrypoint: ['']
   script:
     - terraform init
-    - terraform taint cloudstack_instance.vm2
+    #- terraform taint cloudstack_instance.vm2
     - terraform apply -auto-approve
   only:
     - main
