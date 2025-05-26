@@ -36,8 +36,6 @@ deploy:
     - terraform apply -auto-approve
   only:
     - main
-  dependencies:
-    - dockerized
   environment:
     name: production
   tags:
