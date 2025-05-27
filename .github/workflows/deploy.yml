@@ -11,9 +11,6 @@ env:
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
   ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-  TF_VAR_secret_key: ${{ secrets.SECRET_KEY }}
-  TF_VAR_api_key: ${{ secrets.TF_VAR_API_KEY }}
-  TF_VAR_api_url: ${{ secrets.TF_VAR_API_URL }}
   TF_VAR_docker_image_name: ${{ secrets.TF_VAR_DOCKER_IMAGE_NAME }}
   DOCKER_DRIVER: overlay2
   TF_INPUT: "false"
@@ -67,6 +64,10 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
+        env:
+          TF_VAR_api_url: ${{ secrets.TF_VAR_API_URL }}
+          TF_VAR_api_key: ${{ secrets.TF_VAR_API_KEY }}
+          TF_VAR_secret_key: ${{ secrets.SECRET_KEY }}
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
