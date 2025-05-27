@@ -57,12 +57,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Debug Terraform Inputs
-        run: |
-          echo "api_url=$api_url"
-          echo "api_key=$api_key"
-          echo "secret_key=$secret_key"
         
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
