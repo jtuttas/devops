@@ -11,6 +11,7 @@ terraform {
     storage_account_name = "tfstate28675" # Dein tatsächlicher Name
     container_name       = "tfstate"
     key                  = "terraform/dev.tfstate"
+    use_cli = false
   }
 }
 
