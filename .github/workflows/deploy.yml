@@ -11,6 +11,9 @@ env:
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
   ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  TF_VAR_secret_key: ${{ secrets.SECRET_KEY }}
+  TF_VAR_api_key: ${{ secrets.TF_VAR_API_KEY }}
+  TF_VAR_api_url: ${{ secrets.TF_VAR_API_URL }}
   DOCKER_DRIVER: overlay2
   TF_INPUT: "false"
   TF_IN_AUTOMATION: "true"
