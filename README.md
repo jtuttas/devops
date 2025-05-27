@@ -1,5 +1,13 @@
 # ci/cd Example die ein Docker Image deployed und via terraform auf eine Cloudstackumgebung deployed
 
+Die Pipeline nutzt zwei Phasen um den Auftrag zu erfüllen:
+
+1. In der ersten Phase wird ein Docker Image erzeugt, welches eine HTML Seite via nginx ausliefert. Dieses Docker Image wird gegen Ender der ersten Phase auf den **DockerHub** veröffentlicht.
+
+2. In der zweiten Phase wird mittels **terraform** auf **cloudstack** eine Infrastruktur erzeugt. Diese besteht aus einem *Subnetz* und einer *Linux VM*. Die Ports für SSH und HTTP werden geöffnet und die Firewallregeln entsprechend angepasst. Über **cloud-init** wird auf dieser Linux VM *Docker* installiert. Docker holt sich dann das in Phase 1 erstelle *Docker Image* vom **Docker Hub** und führt dieses aus.
+
+> Terraform legt für die Beschreibung der Infrastruktur eine *tfconfig* Datei an. Damit diese Informationen außerhalb der Pipeline gespeichert und beim nächsten Durchlauf von terraform erhalten bleiben. Werden diese Informationen auf einem **Azure Blob Storage** gespeichert.
+
 ## Notwendige Umgebungsvariablen
 
 ### Für die Docker Image erstellung
@@ -14,6 +22,8 @@
 - `TF_VAR_api_url`: Die URL der CloudStack-API, e.g. https://cloudstack.mm-bbs.de/client/api
 - `TF_VAR_api_key`: Der API-Schlüssel für die CloudStack-API.
 - `TF_VAR_secret_key`: Der geheime Schlüssel für die CloudStack-API.
+- `TF_VAR_docker_image_name`: Der Name des abzuholenden Docker Images, e.g. 'tuttas/devops'.
+
 
 ### Für den Azure Blob Storage
 
